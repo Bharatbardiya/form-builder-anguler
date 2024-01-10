@@ -80,11 +80,7 @@ export class FormFieldLabelExample {
 
     if(this.formData.valid){
       this.flag = true;
-      console.log('form data is ', this.formData);
-      console.log("options : ", this.Options);
     }
-    else 
-      console.log("form data not valid");
 
     let obj: ListEntry = {
       ElementName: this.formData.value.ElementName,
@@ -95,7 +91,6 @@ export class FormFieldLabelExample {
     };
 
     this.formDataArray.push(obj);
-    console.log(this.formDataArray);
     this.Options = [];
     this.formData.reset();
     this.toggle_option = false;
@@ -116,8 +111,6 @@ export class FormFieldLabelExample {
   }
 
   handleOptions(){
-    console.log(this.formData.value.option);
-    console.log(this.Options);
     this.Options.push(this.formData.value.option);
     this.formData.value.option = "";
   }
