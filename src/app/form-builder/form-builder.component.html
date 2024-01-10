@@ -1,0 +1,150 @@
+<div class="example-container">
+    <div style="width: 80%; margin: 10px auto">
+        <div><h1>Form Builder</h1></div>
+        <hr style="margin-bottom: 20px;">
+        <mat-card style="padding: 0 20px">
+            <mat-card-title style="padding-top: 10px"
+                >Add Fields Here</mat-card-title
+            >
+            <form [formGroup]="formData" style="margin-bottom: 0">
+                <div class="example-form-fields" style="margin-bottom: 0px">
+                    <mat-form-field>
+                        <mat-label>Element Name</mat-label>
+                        <input
+                            matInput
+                            formControlName="ElementName"
+                            required
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Element Type</mat-label>
+                        <mat-select
+                            formControlName="ElementType"
+                            (ngModelChange)="handleSelect()"
+                        >
+                            <mat-option value="text">Text</mat-option>
+                            <mat-option value="email">Email</mat-option>
+                            <mat-option value="password">Password</mat-option>
+                            <mat-option value="select">Select</mat-option>
+                            <mat-option value="radio">Radio</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div id="options" [innerHTML]="addToHtml"></div>
+                    <mat-checkbox
+                        style="margin: 5px 0 0 10px"
+                        formControlName="Required"
+                        >Required?</mat-checkbox
+                    >
+
+                    <div
+                        class="example-button-container"
+                        style="margin-top: 5px; margin-left: 10px"
+                    >
+                        <button
+                            (click)="saveForm()"
+                            mat-raised-button color="accent"
+                            aria-label="Example button"
+                        >
+                            Add
+                        </button>
+                    </div>
+                    <div
+                        class="example-button-container"
+                        style="margin-top: 5px; margin-left: 10px"
+                    >
+                        <button
+                        mat-raised-button color="accent"
+                            aria-label="Example button"
+                            (click)="handleReset()"
+                        >
+                        Reset
+                        </button>
+                    </div>
+                </div>
+                <div
+                    style="margin-bottom: 0px"
+                    [ngStyle]="{ display: toggle_option ? 'block' : 'none' }"
+                >
+                    <div class="example-form-fields">
+                        <mat-form-field>
+                            <mat-label>Add Options</mat-label>
+                            <input matInput formControlName="option" required />
+                        </mat-form-field>
+                        <div
+                            class="example-button-container"
+                            style="margin-top: 5px; margin-left: 10px"
+                        >
+                            <button
+                                (click)="handleOptions()"
+                                mat-raised-button
+                                color="accent"
+                                aria-label="Example button"
+                            >
+                                Add Options
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+    <div style="padding: 10px 0 10px 0;">
+        <div style="width: 80%; margin: 20px auto 20px auto;">
+            <mat-card style="padding: 20px 20px;">
+                <h2>Form Structure</h2>
+                <h4 style="text-align: center;"  *ngIf="formDataArray.length===0">Table is Empty</h4>
+                 <table class="rwd-table" *ngIf="formDataArray.length>0">
+                    <tbody>
+                      <tr>
+                        <th>ElementName</th>
+                        <th>ElementType</th>
+                        <th>Options</th>
+                        <th>Required?</th>
+                      </tr>
+                      <tr *ngFor="let element of formDataArray">
+                        <td data-th="ElementName">
+                          {{element.ElementName}}
+                        </td>
+                        <td data-th="ElementType">
+                          {{element.ElementType}}
+                        </td>
+                        <td data-th="Options">
+                          {{element.Options.length===0?"N/A":element.Options}}
+                        </td>
+                        <td data-th="Required?">
+                          {{element.Required}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <button  *ngIf="formDataArray.length>0" style="width: auto; margin: 30px auto;" mat-raised-button color="accent" (click)="handleGenerateForm()">Generate Form Code</button>
+
+            </mat-card>
+
+
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;" [ngStyle]="{display: show_answer?'flex':'none'}">
+        <h2>Answer</h2>
+        <div style="display: flex; gap: 10px; width: 90%; flex-wrap: wrap; justify-content: center;">
+        
+        <mat-form-field style="width: 80%;">
+            <textarea matInput
+                      readonly
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      style="background-color: rgb(57, 57, 57); color: white; padding: 10px;"
+                      cdkAutosizeMinRows="1"
+                      rows="5"
+                      cdkAutosizeMaxRows="20">{{rowHtml}}</textarea>
+          </mat-form-field>
+          <button mat-raised-button color="accent" [cdkCopyToClipboard]="rowHtml" style="align-self: flex-end; margin-bottom: 23px;">Copy Row HTML</button>
+        
+        </div>
+    </div>
+          
+          
+    
+</div>
