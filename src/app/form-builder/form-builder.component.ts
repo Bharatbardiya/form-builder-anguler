@@ -115,7 +115,7 @@ export class FormFieldLabelExample {
 
   handleOptions(){
     this.Options.push(this.formData.value.option);
-    this.formData.value.option = "";
+    this.formData.get("option")?.reset();
   }
  
   formPreview(){
