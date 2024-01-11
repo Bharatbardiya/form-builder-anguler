@@ -1,7 +1,5 @@
 <div class="example-container">
     <div style="width: 80%; margin: 10px auto">
-        <div><h1>Form Builder</h1></div>
-        <hr style="margin-bottom: 20px;">
         <mat-card style="padding: 0 20px">
             <mat-card-title style="padding-top: 10px"
                 >Add Fields Here</mat-card-title
@@ -43,7 +41,8 @@
                     >
                         <button
                             (click)="saveForm()"
-                            mat-raised-button color="accent"
+                            mat-raised-button
+                            color="accent"
                             aria-label="Example button"
                         >
                             Add
@@ -54,11 +53,12 @@
                         style="margin-top: 5px; margin-left: 10px"
                     >
                         <button
-                        mat-raised-button color="accent"
+                            mat-stroked-button
+                            color="accent"
                             aria-label="Example button"
                             (click)="handleReset()"
                         >
-                        Reset
+                            Reset
                         </button>
                     </div>
                 </div>
@@ -89,62 +89,105 @@
             </form>
         </mat-card>
     </div>
-    <div style="padding: 10px 0 10px 0;">
-        <div style="width: 80%; margin: 20px auto 20px auto;">
-            <mat-card style="padding: 20px 20px;">
+    <div style="padding: 10px 0 10px 0">
+        <div style="width: 80%; margin: 20px auto 20px auto">
+            <mat-card style="padding: 20px 20px">
                 <h2>Form Structure</h2>
-                <h4 style="text-align: center;"  *ngIf="formDataArray.length===0">Table is Empty</h4>
-                 <table class="rwd-table" *ngIf="formDataArray.length>0">
+                <h4
+                    style="text-align: center"
+                    *ngIf="formDataArray.length === 0"
+                >
+                    Table is Empty
+                </h4>
+                <table class="rwd-table" *ngIf="formDataArray.length > 0">
                     <tbody>
-                      <tr>
-                        <th>ElementName</th>
-                        <th>ElementType</th>
-                        <th>Options</th>
-                        <th>Required?</th>
-                      </tr>
-                      <tr *ngFor="let element of formDataArray">
-                        <td data-th="ElementName">
-                          {{element.ElementName}}
-                        </td>
-                        <td data-th="ElementType">
-                          {{element.ElementType}}
-                        </td>
-                        <td data-th="Options">
-                          {{element.Options.length===0?"N/A":element.Options}}
-                        </td>
-                        <td data-th="Required?">
-                          {{element.Required}}
-                        </td>
-                      </tr>
+                        <tr>
+                            <th>ElementName</th>
+                            <th>ElementType</th>
+                            <th>Options</th>
+                            <th>Required?</th>
+                        </tr>
+                        <tr *ngFor="let element of formDataArray">
+                            <td data-th="ElementName">
+                                {{ element.ElementName }}
+                            </td>
+                            <td data-th="ElementType">
+                                {{ element.ElementType }}
+                            </td>
+                            <td data-th="Options">
+                                {{
+                                    element.Options.length === 0
+                                        ? "N/A"
+                                        : element.Options
+                                }}
+                            </td>
+                            <td data-th="Required?">
+                                {{ element.Required }}
+                            </td>
+                        </tr>
                     </tbody>
-                  </table>
-                <button  *ngIf="formDataArray.length>0" style="width: auto; margin: 30px auto;" mat-raised-button color="accent" (click)="handleGenerateForm()">Generate Form Code</button>
-
+                </table>
+                <button
+                    *ngIf="formDataArray.length > 0"
+                    style="width: auto; margin: 30px auto"
+                    mat-raised-button
+                    color="accent"
+                    (click)="handleGenerateForm()"
+                >
+                    Generate Form Code
+                </button>
             </mat-card>
-
-
         </div>
     </div>
 
-    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;" [ngStyle]="{display: show_answer?'flex':'none'}">
+    <div
+        style="
+            width: 80%;
+            margin: 0 auto 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        "
+        [ngStyle]="{ display: show_answer ? 'flex' : 'none' }"
+    >
         <h2>Answer</h2>
-        <div style="display: flex; gap: 10px; width: 90%; flex-wrap: wrap; justify-content: center;">
-        
-        <mat-form-field style="width: 80%;">
-            <textarea matInput
-                      readonly
-                      cdkTextareaAutosize
-                      #autosize="cdkTextareaAutosize"
-                      style="background-color: rgb(57, 57, 57); color: white; padding: 10px;"
-                      cdkAutosizeMinRows="1"
-                      rows="5"
-                      cdkAutosizeMaxRows="20">{{rowHtml}}</textarea>
-          </mat-form-field>
-          <button mat-raised-button color="accent" [cdkCopyToClipboard]="rowHtml" style="align-self: flex-end; margin-bottom: 23px;">Copy Row HTML</button>
-        
+        <mat-form-field style="width: 100%">
+            <textarea
+                matInput
+                readonly
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                style="
+                    background-color: rgb(57, 57, 57);
+                    color: white;
+                    padding: 10px;
+                "
+                cdkAutosizeMinRows="1"
+                rows="5"
+                cdkAutosizeMaxRows="20"
+                >{{ rowHtml }}</textarea
+            >
+        </mat-form-field>
+
+        <div
+            style="
+                display: flex;
+                gap: 10px;
+                width: 90%;
+                flex-wrap: wrap;
+                justify-content: center;
+            "
+        >
+            <button mat-raised-button color="accent" (click)="formPreview()">Preview Form</button>
+            <button
+                mat-stroked-button
+                color="accent"
+                [cdkCopyToClipboard]="rowHtml"
+                
+            >
+                Copy Row HTML
+            </button>
         </div>
     </div>
-          
-          
-    
 </div>

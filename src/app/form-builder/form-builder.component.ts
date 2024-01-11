@@ -57,7 +57,7 @@ export class FormFieldLabelExample {
   addToHtml:string = "";
   formData!: FormGroup;
   flag: boolean = false;
-  rowMyHtml:string = "<form>\n";
+  rowMyHtml:string = `<form style="display:flex; flex-direction:column; gap:5px; border:2px solid gray; border-radius:5px;">\n`;
   rowHtml: string = "";
   tempHtml : string = "";
   
@@ -81,19 +81,22 @@ export class FormFieldLabelExample {
     if(this.formData.valid){
       this.flag = true;
     }
+      let obj: ListEntry = {
+        ElementName: this.formData.value.ElementName,
+        ElementType: this.formData.value.ElementType,
+        Required: this.formData.value.Required,
+        Options: this.Options,
 
-    let obj: ListEntry = {
-      ElementName: this.formData.value.ElementName,
-      ElementType: this.formData.value.ElementType,
-      Required: this.formData.value.Required,
-      Options: this.Options,
+      };
 
-    };
+      this.formDataArray.push(obj);
+      this.Options = [];
+      this.formData.reset();
+      this.toggle_option = false;
+    // else{
+    //   alert("form data invalid");
+    // }
 
-    this.formDataArray.push(obj);
-    this.Options = [];
-    this.formData.reset();
-    this.toggle_option = false;
   }
 
   handleReset(){
@@ -115,7 +118,20 @@ export class FormFieldLabelExample {
     this.formData.value.option = "";
   }
  
-  handleGenerateForm(){
+  formPreview(){
+
+    const xyz:any = this.handleGenerateForm();
+    const pageHtml = `<div style="display:flex; align-items:center; justify-content:center; min-height:70vh; padding:10px;">${xyz}</div>`;
+
+    const newWindow = window.open();
+    if (newWindow) {
+      newWindow.document.write(pageHtml);
+    } else {
+      alert('Unable to open a new window. Please check your browser settings.');
+    }
+  }
+
+  handleGenerateForm():any{
     this.formDataArray.forEach((element, i) => {
       if(element.ElementType==="text" || element.ElementType==="email" || element.ElementType ==="password"){
         this.tempHtml = `<label>${element.ElementName}</label>\n`
@@ -125,7 +141,7 @@ export class FormFieldLabelExample {
         this.tempHtml = `<label>${element.ElementName}</label>\n`
         this.tempHtml += '<select>';
         element.Options.forEach((ele)=>{
-          this.tempHtml += `<option>${ele}</option>`;
+          this.tempHtml += `<option value=${ele}>${ele}</option>`;
         })
         this.tempHtml += `</select>\n<br>\n`
       }
@@ -143,10 +159,9 @@ export class FormFieldLabelExample {
 
     this.rowMyHtml += "<button type='submit'>submit</button>\n<br>\n</form>"
     this.rowHtml = this.rowMyHtml;
-    this.rowMyHtml = "<form>\n";
-  }
-  handleCopyHtml(){
-
+    this.rowMyHtml = `<form style="display:flex; flex-direction:column; gap:5px; border:2px solid gray; border-radius:5px; padding:10px;">\n`;
+    return this.rowHtml;
+    
   }
 }
 
